@@ -10,5 +10,5 @@ Follow the Steps to Run Single StandAlone Game of Rolling Dice.
 
 ### How do I get set up? ###
 
-* Compile java code javac RollingDice.java {noOfPlayers} {maximumPoints}
-* Run code java RollingDice
+* Compile java code javac RollingDice.java 
+* Run code java RollingDice {noOfPlayers} {maximumPoints}
