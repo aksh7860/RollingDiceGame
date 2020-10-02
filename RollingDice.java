@@ -23,14 +23,13 @@ class RollingDice {
 		HashMap<Integer,PlayerInfo> playerInfoMap = new HashMap<Integer,PlayerInfo>();
 		System.out.println("No of Players playing are"+args[0]);
 		List<Integer> playingOrder = getPlayingOrder(noPlayers);
-		List<Integer> currRankOrder = new ArrayList<Integer>();
+		List<Integer> currRankOrder = new LinkedList<Integer>();
 
-		//Initalising Map and Rank
+		//Initalising PlayerInfo Map
 		for(int itr=0;itr<noPlayers;itr++) {
 			playerInfoMap.put(itr,new PlayerInfo("Player-"+(itr+1),0));
-			currRankOrder.add(itr+1);
 		}
-		System.out.println("currRankOrder size="+currRankOrder.size());
+
 		// Start Playing the Game
 		System.out.println("Let the game begin");
 		int itr=0;
@@ -60,15 +59,17 @@ class RollingDice {
 			if(player.score>=winingPoints) {
 				playingOrder.remove(new Integer(playerId));
 				itr = (itr+1)%(playingOrder.size());
+				currRankOrder.add(playerId);
 				if(itr == playingOrder.size()-1 || itr==0) {
 					itr=0;
 				} else {
 					itr=itr-1;
 				}
+				System.out.println("Hurray! You have accumulated Max Points . You came:"+getRank(playerInfoMap));
 				player.isGameFinished = true;
 				playerInfoMap.put(playerId,player);
-				System.out.println("Hurray! You have accumulated Max Points . You came:"+(currRankOrder.get(playerId)+1));
 				if(playingOrder.size()==1) {
+					currRankOrder.add(playingOrder.get(0));
 					break;
 				}
 				continue;
@@ -97,27 +98,45 @@ class RollingDice {
 	}
 
 	private static void printScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
-		System.out.println("Score Board");
+		System.out.println();
 		int itr=0;
 		HashMap<Integer,PlayerInfo> sortedMap = sortByValue(map);
-		System.out.println("-----------------------------------------");
+		System.out.println("------------ Score Board -------------");
+
+		//Printing 
+		for(Integer playerId: currRankOrder) {
+			System.out.println(map.get(playerId).playerName+"   "+map.get(playerId).score);
+		}
+
 		for(Map.Entry<Integer,PlayerInfo> entry:sortedMap.entrySet()) {
-			currRankOrder.set(entry.getKey(),itr);
 			itr++;
 			if(entry.getValue().isGameFinished){
 				continue;
 			}
-			System.out.println((itr+1)+"   "+entry.getValue().playerName+"   "+entry.getValue().score);
+			System.out.println(entry.getValue().playerName+"   "+entry.getValue().score);
 		}
 		System.out.println("-----------------------------------------");
+		System.out.println();
 	}
 
+	private static int getRank(HashMap<Integer,PlayerInfo> map) {
+		int count = 0;
+		int rank =0;
+		for(Map.Entry<Integer,PlayerInfo> entry:map.entrySet()) {
+			if(entry.getValue().isGameFinished){
+				count++;
+			}
+		}
+		return count+1;	
+	}	
+
 	private static void finalPrintScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
+		System.out.println();
 		System.out.println("-----------------------------------------");
 		System.out.println("Rank   PlayerName");
 		int itr=0;
-		for(itr=0;itr<currRankOrder.size();) {
-			System.out.println((itr+1)+"   "+map.get(currRankOrder.get(itr)).playerName);
+		for(Integer playerId: currRankOrder) {
+			System.out.println((itr+1)+"   "+map.get(playerId).playerName);
 			itr++;
 		}
 		System.out.println("-----------------------------------------");
