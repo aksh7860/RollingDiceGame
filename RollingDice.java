@@ -55,8 +55,9 @@ class RollingDice {
 			System.out.println(" You got number = "+currNumber);
 			player.score+=currNumber;
 			playerInfoMap.put(playerId,player);
-			printScoreBoard(playerInfoMap,currRankOrder);
+			displayScoreBoard(playerInfoMap,currRankOrder);
 			if(player.score>=winingPoints) {
+				System.out.println("Hurray! You have accumulated Max Points . You came:"+(currRankOrder.size()+1));
 				playingOrder.remove(new Integer(playerId));
 				itr = (itr+1)%(playingOrder.size());
 				currRankOrder.add(playerId);
@@ -65,7 +66,6 @@ class RollingDice {
 				} else {
 					itr=itr-1;
 				}
-				System.out.println("Hurray! You have accumulated Max Points . You came:"+getRank(playerInfoMap));
 				player.isGameFinished = true;
 				playerInfoMap.put(playerId,player);
 				if(playingOrder.size()==1) {
@@ -89,7 +89,7 @@ class RollingDice {
 			itr = (itr+1)%(playingOrder.size());
 		}
 		System.out.println("Game Over -- Final Standings");
-		finalPrintScoreBoard(playerInfoMap,currRankOrder);
+		finalScoreBoard(playerInfoMap,currRankOrder);
 	}
 
 	private static int getRandomNumber(int min, int max) {
@@ -97,7 +97,7 @@ class RollingDice {
 		return r.nextInt((max - min) + 1) + min;
 	}
 
-	private static void printScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
+	private static void displayScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
 		System.out.println();
 		int itr=0;
 		HashMap<Integer,PlayerInfo> sortedMap = sortByValue(map);
@@ -119,7 +119,7 @@ class RollingDice {
 		System.out.println();
 	}
 
-	private static int getRank(HashMap<Integer,PlayerInfo> map) {
+	/*private static int getRank(HashMap<Integer,PlayerInfo> map) {
 		int count = 0;
 		int rank =0;
 		for(Map.Entry<Integer,PlayerInfo> entry:map.entrySet()) {
@@ -128,9 +128,9 @@ class RollingDice {
 			}
 		}
 		return count+1;	
-	}	
+	}*/	
 
-	private static void finalPrintScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
+	private static void finalScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
 		System.out.println();
 		System.out.println("-----------------------------------------");
 		System.out.println("Rank   PlayerName");
