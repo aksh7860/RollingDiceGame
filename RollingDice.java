@@ -1,5 +1,5 @@
 import java.util.*;
-public class RollingDice {
+class RollingDice {
 	static class PlayerInfo {
 		String playerName;
 		Integer score;
