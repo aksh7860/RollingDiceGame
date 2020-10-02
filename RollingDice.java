@@ -119,17 +119,6 @@ class RollingDice {
 		System.out.println();
 	}
 
-	/*private static int getRank(HashMap<Integer,PlayerInfo> map) {
-		int count = 0;
-		int rank =0;
-		for(Map.Entry<Integer,PlayerInfo> entry:map.entrySet()) {
-			if(entry.getValue().isGameFinished){
-				count++;
-			}
-		}
-		return count+1;	
-	}*/	
-
 	private static void finalScoreBoard(HashMap<Integer,PlayerInfo> map,List<Integer> currRankOrder) {
 		System.out.println();
 		System.out.println("-----------------------------------------");
